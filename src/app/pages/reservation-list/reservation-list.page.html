@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Reservation List</ion-title>
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-icon name="home-outline" slot="end" routerLink="/home"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content
+[scrollEvents]="true"
+(ionScrollStart)="handleScrollStart()"
+(ionScroll)="handleScroll($any($event))"
+(ionScrollEnd)="handleScrollEnd()">
+  <div class="list-container">
+    <ion-list>
+      <ion-item *ngFor="let reservation of reservations">
+        <ion-label>
+          <h2>{{ reservation.name }}</h2>
+          <p>Participants: {{ reservation.participants }}</p>
+          <p>Date: {{ reservation.date }}</p>
+        </ion-label>
+        <ion-button slot="end"(click)="share(reservation)">Share</ion-button>
+        <ion-thumbnail>
+          <img [src]="reservation.imageUrl" alt="Reservation Image">
+        </ion-thumbnail>
+      </ion-item>
+    </ion-list>
+    <div class="button-container">
+      <ion-button (click)="clearReservations()">Clear Reservations</ion-button>
+    </div>
+  </div>
+</ion-content>
+
+
+
+
+

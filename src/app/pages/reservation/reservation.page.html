@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>Reservation</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="form-container">
+    <ion-item>
+      <ion-label position="floating">Name</ion-label>
+      <ion-input [(ngModel)]="booking.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Participants</ion-label>
+      <ion-input type="number" [(ngModel)]="booking.participants"></ion-input>
+    </ion-item>
+    <div class="image-container">
+      <ion-button (click)="selectImage()">Select Image</ion-button>
+      <img *ngIf="booking.imageUrl" [src]="booking.imageUrl" alt="Selected Image"/>
+    </div>
+    <div class="button-container">
+      <ion-button (click)="submitForm()">Submit</ion-button>
+    </div>
+  </div>
+</ion-content>

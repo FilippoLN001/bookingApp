@@ -1,0 +1,46 @@
+.calendar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.custom-calendar {
+  border: 2px solid #3880ff;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.button-title{
+  margin-right: 15px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.description-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.description-container h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #3880ff;
+}
+
+.description-container p {
+  font-size: 1em;
+  color: #666;
+}
+
+ion-button {
+  --background: #3880ff;
+  --color: white;
+  --border-radius: 12px;
+  --padding: 10px 20px;
+  font-size: 16px;
+}

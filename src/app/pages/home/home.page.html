@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Booking App</ion-title>
+    <ion-button slot="end" routerLink="/reservation-list" class="button-title">Reservation List</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="calendar-container">
+    <ion-datetime
+      class="custom-calendar"
+      displayFormat="MMM DD, YYYY"
+      (ionChange)="dateSelected($event)"
+      [isDateEnabled]="isWeekday"
+      presentation="date"
+    ></ion-datetime>
+  </div>
+  <div class="button-container" *ngIf="showButton">
+    <ion-button (click)="reserve()">Book Now</ion-button>
+  </div>
+  <div class="description-container">
+    <h2>Welcome to Our Conference Room Booking App</h2>
+    <p>
+      Easily book conference rooms for your meetings and events. Select an available date from the calendar above, fill in your details, and secure your reservation in just a few clicks. Our app ensures that your chosen date is reserved exclusively for you, preventing double bookings and ensuring a smooth scheduling experience.
+    </p>
+  </div>
+</ion-content>
