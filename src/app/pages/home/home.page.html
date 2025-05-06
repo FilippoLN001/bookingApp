@@ -13,6 +13,7 @@
       (ionChange)="dateSelected($event)"
       [isDateEnabled]="isWeekday"
       presentation="date"
+      [min]="today"
     ></ion-datetime>
   </div>
   <div class="button-container" *ngIf="showButton">

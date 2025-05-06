@@ -28,6 +28,7 @@ export class ReservationPage implements OnInit {
     this.route.queryParams.subscribe(params => {
       const selectedDate = this.bookingService.getSelectedDate();
       this.booking.date = selectedDate || '';
+      this.isFormComplete();
     });
   }
 
@@ -65,12 +66,19 @@ export class ReservationPage implements OnInit {
   }
 
   async submitForm() {
-    console.log('Booking details:', this.booking);
-    const reservations = await Preferences.get({ key: 'reservations' });
-    const currentReservations = reservations.value ? JSON.parse(reservations.value) : [];
-    currentReservations.push(this.booking);
-    await Preferences.set({ key: 'reservations', value: JSON.stringify(currentReservations) });
+    if(this.isFormComplete()){
 
-    this.navCtrl.navigateForward('/reservation-list');
+      console.log('Booking details:', this.booking);
+      const reservations = await Preferences.get({ key: 'reservations' });
+      const currentReservations = reservations.value ? JSON.parse(reservations.value) : [];
+      currentReservations.push(this.booking);
+      await Preferences.set({ key: 'reservations', value: JSON.stringify(currentReservations) });
+
+      this.navCtrl.navigateForward('/reservation-list');
+    }
+  }
+
+  isFormComplete() : boolean{
+    return  !! (this.booking.name && this.booking.participants>0 && this.booking.imageUrl)
   }
 }

@@ -18,6 +18,7 @@ export class HomePage implements OnInit {
   selectedDate: string | undefined;
   dateSelectedFlag = false;
   reservedDates: string[] = []; // Array for reserved dates
+  today!: string;
 
   constructor(private bookingService: BookingService, private loadingCtrl: LoadingController, private route: ActivatedRoute, private navCtrl: NavController) { }
 
@@ -28,8 +29,11 @@ export class HomePage implements OnInit {
     });
     this.loadCalendar();
     this.loadHolidays();
-    const storedDate = await Preferences.get({ key: 'selectedDate' });
-    this.selectedDate = storedDate.value ? storedDate.value : undefined;
+    // const storedDate = await Preferences.get({ key: 'selectedDate' });
+    // this.selectedDate = storedDate.value ? storedDate.value : undefined;
+    await this.loadReservedDates();
+    this.today = new Date().toISOString().split('T')[0];
+    await this.checkAndSelectDate();
   }
 
   ionViewWillEnter() { //ion lifecycle
@@ -94,5 +98,26 @@ export class HomePage implements OnInit {
     const reservations = await Preferences.get({ key: 'reservations' });
     this.reservedDates = reservations.value ? JSON.parse(reservations.value).map((res: any) => res.date) : [];
     console.log(this.reservedDates);
+  }
+
+  findNextAvailableDate(startDate: string): string {
+    let nextDate = new Date (startDate);
+    while(this.reservedDates.includes(nextDate.toISOString().split('T')[0])
+    || !this.isWeekday(nextDate.toISOString().split('T')[0])){
+      nextDate.setDate(nextDate.getDate() + 1);
+    }
+    return nextDate.toISOString().split('T')[0];
+  }
+
+  async checkAndSelectDate(){
+    const today = new Date().toISOString().split('T')[0];
+    if(this.reservedDates.includes(today)){
+      this.selectedDate = this.findNextAvailableDate(today);
+    }else{
+      this.selectedDate = today;
+    }
+    this.showButton = true;
+    this.bookingService.setSelectedDate(this.selectedDate);
+    await Preferences.set({key: 'selectedDate', value: this.selectedDate});
   }
 }
